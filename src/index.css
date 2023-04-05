@@ -1,13 +1,256 @@
-body {
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #282828;
+  color: #fff;
 }
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+form {
+  margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-right: 1rem;
+  width: 250px;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+button {
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #1db954;
+  color: #fff;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.card {
+  width: calc(33.33% - 1rem);
+  background-color: #000000;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 1rem;
+}
+
+.card p {
+  font-size: 1.1rem;
+  margin: 1rem;
+  color: #444;
+}
+
+.suggested-genres {
+  margin-bottom: 1rem;
+}
+
+/* ArtistInfo component styles */
+.artist-info {
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.artist-info-container {
+  width: 80%;
+  background-color: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.artist-info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1db954;
+  padding: 1rem;
+  color: #fff;
+}
+
+.artist-info-header h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.artist-info-header button {
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.artist-info-body {
+  padding: 1rem;
+}
+
+.artist-info-body img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+.artist-info-body p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #444;
+  }
+  
+  .artist-info-body ul {
+  list-style: none;
+  margin-bottom: 1rem;
+  }
+  
+  .artist-info-body ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  }
+  
+  .artist-info-body ul li svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.5rem;
+  fill: #1db954;
+  }
+  
+  .artist-info-body ul li span {
+  font-size: 1.1rem;
+  color: #444;
+  }
+  
+  .artist-info-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f7f7f7;
+  padding: 1rem;
+  }
+  
+  .artist-info-footer p {
+  font-size: 1.1rem;
+  margin-right: 1rem;
+  color: #444;
+  }
+  
+  .artist-info-footer a {
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #1db954;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  }
+/* CommentSection component styles */
+.comment-section {
+  margin-top: 2rem;
+  }
+  
+  .comment-list {
+  list-style: none;
+  margin-bottom: 2rem;
+  }
+  
+  .comment-list li {
+  margin-bottom: 1rem;
+  }
+  
+  .comment-list li p {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #1db954;
+  }
+  
+  .comment-list li small {
+  font-size: 0.8rem;
+  color: #888;
+  }
+  
+  .comment-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  }
+  
+  .comment-form label {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  }
+  
+  .comment-form input[type="text"],
+  .comment-form textarea {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #f7f7f7;
+  margin-bottom: 1rem;
+  }
+  
+  .comment-form button {
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #1db954;
+  color: #fff;
+  cursor: pointer;
+  }
