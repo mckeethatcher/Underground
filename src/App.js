@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './index.css';
 import ArtistInfo from './ArtistInfo';
 import CommentSection from './CommentSection';
+import TopSongs from './TopSongs';
+import RelatedArtists from './RelatedArtists';
 
 const SPOTIFY_CLIENT_ID = 'ced1e023722b4ed18fa02bd600da4547';
 const SPOTIFY_CLIENT_SECRET = '6e0a60ff6e9343489b9aa3f792f8b61c';
@@ -97,6 +99,7 @@ function App() {
             <h2>{artist.name}</h2>
             <p>{artist.streams} streams</p>
             <CommentSection />
+            <RelatedArtists />
           </div>
         ))}
       </div>
@@ -104,6 +107,7 @@ function App() {
         <>
           <ArtistInfo artist={selectedArtist} onClose={handleCloseArtist} />
           <CommentSection />
+         
         </>
       )}
     </div>

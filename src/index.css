@@ -144,50 +144,51 @@ button {
   object-fit: cover;
   margin-bottom: 1rem;
 }
+
 .artist-info-body p {
   font-size: 1.2rem;
   margin-bottom: 1rem;
   color: #444;
-  }
-  
-  .artist-info-body ul {
+}
+
+.artist-info-body ul {
   list-style: none;
   margin-bottom: 1rem;
-  }
-  
-  .artist-info-body ul li {
+}
+
+.artist-info-body ul li {
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
-  }
-  
-  .artist-info-body ul li svg {
+}
+
+.artist-info-body ul li svg {
   width: 1.5rem;
   height: 1.5rem;
   margin-right: 0.5rem;
   fill: #1db954;
-  }
-  
-  .artist-info-body ul li span {
+}
+
+.artist-info-body ul li span {
   font-size: 1.1rem;
   color: #444;
-  }
-  
-  .artist-info-footer {
+}
+
+.artist-info-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #f7f7f7;
   padding: 1rem;
-  }
-  
-  .artist-info-footer p {
+}
+
+.artist-info-footer p {
   font-size: 1.1rem;
   margin-right: 1rem;
   color: #444;
-  }
-  
-  .artist-info-footer a {
+}
+
+.artist-info-footer a {
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
   border: none;
@@ -196,7 +197,43 @@ button {
   color: #fff;
   cursor: pointer;
   text-decoration: none;
-  }
+}
+
+.top-songs {
+  margin-top: 1rem;
+}
+
+.top-songs h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.top-songs ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.top-songs li {
+  font-size: 1.1rem;
+  margin-bottom: 1rem; /* increase margin */
+  color: #444;
+}
+
+.top-songs li a {
+  display: block;
+  padding: 0.5rem 0;
+  color: #0b120d;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.top-songs li a:hover {
+  color: #ffffff;
+}
+
+  
 /* CommentSection component styles */
 .comment-section {
   margin-top: 2rem;

@@ -18,6 +18,7 @@ function ArtistCard({ artist }) {
         <p>{artist.description}</p>
         <button onClick={toggleComments}>{showComments ? 'Hide' : 'Show'} Comments</button>
         {showComments && <CommentSection artistId={artist.id} />}
+        
       </div>
     </div>
   );
