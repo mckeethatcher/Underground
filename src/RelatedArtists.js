@@ -23,6 +23,9 @@ function RelatedArtists({ artistId }) {
     })
       .then(response => response.json())
       .then(data => {
+        if (!artistId) {
+          return;
+        }
         // fetch related artists from Spotify API
         fetch(SPOTIFY_API_URL + `artists/${artistId}/related-artists`, {
           headers: {
@@ -31,7 +34,7 @@ function RelatedArtists({ artistId }) {
         })
           .then(response => response.json())
           .then(data => {
-            const artists = data.artists.map(artist => {
+            const artists = data.artists ? data.artists.map(artist => {
               return {
                 id: artist.id,
                 name: artist.name,
@@ -39,13 +42,14 @@ function RelatedArtists({ artistId }) {
                 streams: artist.followers.total,
                 spotifyUrl: artist.external_urls.spotify
               };
-            });
+            }) : [];
             setRelatedArtists(artists);
             const maxStreams = Math.max(...artists.map(artist => artist.streams));
             setMaxStreams(maxStreams);
           });
       });
   }, [artistId]);
+  
 
   // handle click on related artist
   const handleClick = (artistId) => {
@@ -73,6 +77,7 @@ function RelatedArtists({ artistId }) {
       )}
     </>
   );
+  
 }
 
 export default RelatedArtists;

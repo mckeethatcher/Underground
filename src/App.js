@@ -5,12 +5,17 @@ import CommentSection from './CommentSection';
 import RelatedArtists from './RelatedArtists';
 import PostComponent from './PostComponent';
 
+
+
+
 const SPOTIFY_CLIENT_ID = 'ced1e023722b4ed18fa02bd600da4547';
 const SPOTIFY_CLIENT_SECRET = '6e0a60ff6e9343489b9aa3f792f8b61c';
 const SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/api/token';
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1/';
-
+// const postSchema = require('./models/postSchema');
+// const Post = mongoose.model('Post', postSchema);
 const genreOptions = ['pop', 'rock', 'hip hop', 'jazz', 'country', 'blues', 'reggae', 'classical', 'electronic', 'metal', 'folk', 'indie', 'r&b', 'soul', 'punk'];
+const mongoose = require('mongoose');
 
 function App() {
   const [artists, setArtists] = useState([]);
@@ -81,62 +86,60 @@ function App() {
     const artistToAdd = artists.find(artist => artist.id === id);
     setMustListenArtists(prevArtists => [...prevArtists, artistToAdd]);
   };
-  
   const handleRemoveFromMustListen = id => {
     const updatedArtists = mustListenArtists.filter(artist => artist.id !== id);
     setMustListenArtists(updatedArtists);
-  };
-  return (
+    };
+    
+    return (
     <div>
-      <h1>Find your new underground artist</h1>
-      <form>
-        <label htmlFor="genre">Search by genre:</label>
-        <input type="text" id="genre" value={searchTerm} onChange={handleSearch} />
-      </form>
-      <div>
-        <label htmlFor="streams">Filter by number of streams:</label>
-        <input type="range" id="streams" min="0" max="10000000" step="2000" value={maxStreams} onChange={handleMaxStreams} />
-        <p>{maxStreams.toLocaleString()} streams or less</p>
-      </div>
-      <div className="suggested-genres">
-        {genreOptions.map(option => (
-          <button key={option} onClick={() => setSearchTerm(option)}>{option}</button>
-        ))}
-      </div>
-      <div className="card-container">
-        {artists.map(artist => (
-          <div key={artist.id} className="card" onClick={() => handleArtistClick(artist.id)}>
-            {artist.image && <img src={artist.image} alt={artist.name} />}
-            <h2>{artist.name}</h2>
-            <p>{artist.streams} streams</p>
-          
-            <RelatedArtists />
-            <button onClick={() => handleAddToMustListen(artist.id)}>Add to Must Listen</button>
-          </div>
-        ))}
-      </div>
-      <h2>Must Listen</h2> 
-      <div className="card-container">
-        {mustListenArtists.map(artist => (
-          <div key={artist.id} className="card" onClick={() => handleArtistClick(artist.id)}>
-            {artist.image && <img src={artist.image} alt={artist.name} />}
-            <h2>{artist.name}</h2>
-            <p>{artist.streams} streams</p>
-            <CommentSection artistId={artist.id} />
-            <RelatedArtists />
-            <button onClick={() => handleRemoveFromMustListen(artist.id)}>Remove from Must Listen</button>
-          </div>
-        ))}
-      </div>
-      {selectedArtist && (
-        <>
-          <ArtistInfo artist={selectedArtist} onClose={handleCloseArtist} />
-        </>
-      )}
-      <PostComponent posts={posts} setPosts={setPosts} />
+    <h1>Find your new underground artist</h1>
+    <form>
+    <label htmlFor="genre">Search by genre:</label>
+    <input type="text" id="genre" value={searchTerm} onChange={handleSearch} />
+    </form>
+    <div>
+    <label htmlFor="streams">Filter by number of streams:</label>
+    <input type="range" id="streams" min="0" max="10000000" step="2000" value={maxStreams} onChange={handleMaxStreams} />
+    <p>{maxStreams.toLocaleString()} streams or less</p>
     </div>
-  );
-  
-
-  }
-  export default App;
+    <div className="suggested-genres">
+    {genreOptions.map(option => (
+    <button key={option} onClick={() => setSearchTerm(option)}>{option}</button>
+    ))}
+    </div>
+    <div className="card-container">
+    {artists.map(artist => (
+    <div key={artist.id} className="card" onClick={() => handleArtistClick(artist.id)}>
+    {artist.image && <img src={artist.image} alt={artist.name} />}
+    <h2>{artist.name}</h2>
+    <p>{artist.streams} streams</p>
+    <RelatedArtists />
+    <button onClick={() => handleAddToMustListen(artist.id)}>Add to Must Listen</button>
+    </div>
+    ))}
+    </div>
+    <h2>Must Listen</h2>
+    <div className="card-container">
+    {mustListenArtists.map(artist => (
+    <div key={artist.id} className="card" onClick={() => handleArtistClick(artist.id)}>
+    {artist.image && <img src={artist.image} alt={artist.name} />}
+    <h2>{artist.name}</h2>
+    <p>{artist.streams} streams</p>
+    <CommentSection artistId={artist.id} />
+    <RelatedArtists />
+    <button onClick={() => handleRemoveFromMustListen(artist.id)}>Remove from Must Listen</button>
+    </div>
+    ))}
+    </div>
+    {selectedArtist && (
+    <>
+    <ArtistInfo artist={selectedArtist} onClose={handleCloseArtist} />
+    </>
+    )}
+    <PostComponent posts={posts} setPosts={setPosts} />
+    </div>
+    );
+    }
+    
+    export default App;
