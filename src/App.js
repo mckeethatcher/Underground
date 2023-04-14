@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './index.css';
 import ArtistInfo from './ArtistInfo';
 import CommentSection from './CommentSection';
-import TopSongs from './TopSongs';
 import RelatedArtists from './RelatedArtists';
+import PostComponent from './PostComponent';
 
 const SPOTIFY_CLIENT_ID = 'ced1e023722b4ed18fa02bd600da4547';
 const SPOTIFY_CLIENT_SECRET = '6e0a60ff6e9343489b9aa3f792f8b61c';
@@ -17,6 +17,8 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('rap');
   const [maxStreams, setMaxStreams] = useState(0);
   const [selectedArtist, setSelectedArtist] = useState(null);
+  const [mustListenArtists, setMustListenArtists] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     // authenticate with Spotify API
@@ -70,11 +72,20 @@ function App() {
     const artist = artists.find(artist => artist.id === id);
     setSelectedArtist(artist);
   };
-
+  
   const handleCloseArtist = () => {
     setSelectedArtist(null);
   };
   
+  const handleAddToMustListen = id => {
+    const artistToAdd = artists.find(artist => artist.id === id);
+    setMustListenArtists(prevArtists => [...prevArtists, artistToAdd]);
+  };
+  
+  const handleRemoveFromMustListen = id => {
+    const updatedArtists = mustListenArtists.filter(artist => artist.id !== id);
+    setMustListenArtists(updatedArtists);
+  };
   return (
     <div>
       <h1>Find your new underground artist</h1>
@@ -98,24 +109,34 @@ function App() {
             {artist.image && <img src={artist.image} alt={artist.name} />}
             <h2>{artist.name}</h2>
             <p>{artist.streams} streams</p>
-            <CommentSection />
+          
             <RelatedArtists />
+            <button onClick={() => handleAddToMustListen(artist.id)}>Add to Must Listen</button>
+          </div>
+        ))}
+      </div>
+      <h2>Must Listen</h2> 
+      <div className="card-container">
+        {mustListenArtists.map(artist => (
+          <div key={artist.id} className="card" onClick={() => handleArtistClick(artist.id)}>
+            {artist.image && <img src={artist.image} alt={artist.name} />}
+            <h2>{artist.name}</h2>
+            <p>{artist.streams} streams</p>
+            <CommentSection artistId={artist.id} />
+            <RelatedArtists />
+            <button onClick={() => handleRemoveFromMustListen(artist.id)}>Remove from Must Listen</button>
           </div>
         ))}
       </div>
       {selectedArtist && (
         <>
           <ArtistInfo artist={selectedArtist} onClose={handleCloseArtist} />
-          <CommentSection />
-         
         </>
       )}
+      <PostComponent posts={posts} setPosts={setPosts} />
     </div>
   );
   
-  
-  
-}
 
-export default App;
-
+  }
+  export default App;

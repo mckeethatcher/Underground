@@ -33,6 +33,7 @@ function RelatedArtists({ artistId }) {
           .then(data => {
             const artists = data.artists.map(artist => {
               return {
+                id: artist.id,
                 name: artist.name,
                 image: artist.images.length > 0 ? artist.images[0].url : null,
                 streams: artist.followers.total,
@@ -57,7 +58,7 @@ function RelatedArtists({ artistId }) {
       {relatedArtists.length > 0 && (
         <>
           <p>Related artists:</p>
-          <div className="card-container">
+          <div className="card-container" style={{ height: '200px', overflowX: 'scroll' }}>
             {relatedArtists.map(artist => (
               <div key={artist.name} className="card" onClick={() => handleClick(artist.id)}>
                 {artist.image && <img src={artist.image} alt={artist.name} />}

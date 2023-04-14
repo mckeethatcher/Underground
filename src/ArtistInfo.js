@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import TopSongs from './TopSongs';
-import RelatedArtists from './RelatedArtists';
 
 const SPOTIFY_CLIENT_ID = 'ced1e023722b4ed18fa02bd600da4547';
 const SPOTIFY_CLIENT_SECRET = '6e0a60ff6e9343489b9aa3f792f8b61c';
@@ -11,6 +10,8 @@ function ArtistInfo({ artist, onClose }) {
   const [maxStreams, setMaxStreams] = useState(0);
   const [genres, setGenres] = useState([]);
   const [relatedArtists, setRelatedArtists] = useState([]);
+  const [selectedArtist, setSelectedArtist] = useState(null);
+
   const MIN_FOLLOWERS_THRESHOLD = 500;
 
   useEffect(() => {
@@ -49,7 +50,8 @@ function ArtistInfo({ artist, onClose }) {
                 name: artist.name,
                 image: artist.images.length > 0 ? artist.images[0].url : null,
                 streams: artist.followers.total,
-                spotifyUrl: artist.external_urls.spotify
+                spotifyUrl: artist.external_urls.spotify,
+                id: artist.id
               };
             });
             setRelatedArtists(artists);
@@ -58,6 +60,26 @@ function ArtistInfo({ artist, onClose }) {
           });
       });
   }, [artist.id]);
+
+  // function to handle clicking on related artist card
+  const handleArtistClick = (artistId, artistName) => {
+    fetch(SPOTIFY_API_URL + `artists/${artistId}/top-tracks?market=US`, {
+      headers: {
+        'Authorization': `Bearer ${SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const topTracks = data.tracks.slice(0, 3).map(track => {
+          return {
+            name: track.name,
+            popularity: track.popularity
+          }
+        });
+        setSelectedArtist({ id: artistId, name: artistName, topTracks });
+      });
+  }
+
   
   return (
     <div className="artist-info">
@@ -72,7 +94,7 @@ function ArtistInfo({ artist, onClose }) {
       <p>{artist.streams} streams</p>
       <p><a href={artist.spotifyUrl} target="_blank" rel="noopener noreferrer">Listen on Spotify</a></p>
       {artist.streams < MIN_FOLLOWERS_THRESHOLD && (
-        <p>This artist doesn't have enough of a following to know who they are similar to.</p>
+        <p>This artist doesn't have enough of a following to accurately know who they are similar to.</p>
       )}
       <hr />
       <div>
@@ -82,7 +104,7 @@ function ArtistInfo({ artist, onClose }) {
             <p>Related artists:</p>
             <div className="card-container">
               {relatedArtists.map(artist => (
-                <div key={artist.name} className="card">
+                <div key={artist.id} className="card" onClick={() => handleArtistClick(artist.id, artist.name)}>
                   {artist.image && <img src={artist.image} alt={artist.name} />}
                   <h2>{artist.name}</h2>
                   <p>{artist.streams.toLocaleString()} streams</p>
@@ -94,8 +116,26 @@ function ArtistInfo({ artist, onClose }) {
           </>
         )}
       </div>
+      {selectedArtist && (
+        <div className="popup">
+          <div className="popup-content">
+            <h3>{selectedArtist.name}</h3>
+            <ul>
+              {selectedArtist.topTracks.map((track, index) => (
+                <li key={index}>
+                  {track.name} ({track.popularity})
+                </li>
+              ))}
+            </ul>
+            <button onClick={() => setSelectedArtist(null)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
+  
+  
+
   
       
   }
