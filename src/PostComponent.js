@@ -13,7 +13,9 @@ function PostComponent() {
     const fetchPosts = async () => {
       try {
         const response = await axios.get('https://undergroundartists.herokuapp.com/api/all-posts');
-        setPosts(response.data.posts || []); // Initialize as empty array if response.data is undefined
+        if (response.data && Array.isArray(response.data.posts)) {
+          setPosts(response.data.posts);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -40,14 +42,13 @@ function PostComponent() {
       console.error(error);
     }
   };
+
   const handleEditPost = (postId) => {
-    setEditingPostId(postId)
-    console.log(editingPostId)
-  }
+    setEditingPostId(postId);
+    console.log(editingPostId);
+  };
 
   const handlePostUpdate = async (postId) => {
-
-
     try {
       const response = await axios.put(`https://undergroundartists.herokuapp.com/api/update-post/${postId}`, {
         title: updateTitle,
@@ -90,7 +91,7 @@ function PostComponent() {
         {editingPostId && <button type="button" onClick={() => setEditingPostId(null)}>Cancel</button>}
       </form>
       <ul>
-      {posts?.map((post, index) => (
+        {posts?.map((post, index) => (
           <li key={index}>
             <h2>{post.title}</h2>
             <p>{post.content}</p>
@@ -98,16 +99,14 @@ function PostComponent() {
             <form> 
               <input type="text" placeholder="Title" value={updateTitle} onChange={event => setUpdateTitle(event.target.value)} />
               <textarea placeholder="Content" value={updateContent} onChange={event => setUpdateContent(event.target.value)} />
-      
               <button type="submit" onClick={() => handlePostUpdate(post._id)}>Update</button>
-            
             </form>
-            
           </li>
         ))}
       </ul>
     </div>
   );
+  
 }
 
 export default PostComponent;
