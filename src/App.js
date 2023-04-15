@@ -24,6 +24,12 @@ function App() {
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [mustListenArtists, setMustListenArtists] = useState([]);
   const [posts, setPosts] = useState([]);
+  var memjs = require('memjs')
+var mc = memjs.Client.create(process.env.MEMCACHIER_SERVERS, {
+  failover: true,  // default: false
+  timeout: 1,      // default: 0.5 (seconds)
+  keepAlive: true  // default: false
+})
 
   useEffect(() => {
     // authenticate with Spotify API
