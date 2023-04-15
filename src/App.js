@@ -15,7 +15,7 @@ const SPOTIFY_API_URL = 'https://api.spotify.com/v1/';
 // const postSchema = require('./models/postSchema');
 // const Post = mongoose.model('Post', postSchema);
 const genreOptions = ['pop', 'rock', 'hip hop', 'jazz', 'country', 'blues', 'reggae', 'classical', 'electronic', 'metal', 'folk', 'indie', 'r&b', 'soul', 'punk'];
-const mongoose = require('mongoose');
+
 
 function App() {
   const [artists, setArtists] = useState([]);
@@ -24,12 +24,7 @@ function App() {
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [mustListenArtists, setMustListenArtists] = useState([]);
   const [posts, setPosts] = useState([]);
-  var memjs = require('memjs')
-var mc = memjs.Client.create(process.env.MEMCACHIER_SERVERS, {
-  failover: true,  // default: false
-  timeout: 1,      // default: 0.5 (seconds)
-  keepAlive: true  // default: false
-})
+
 
   useEffect(() => {
     // authenticate with Spotify API
