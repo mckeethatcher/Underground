@@ -63,22 +63,43 @@ button {
 
 }
 
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
 .card {
-  width: calc(33.33% - 1rem);
+  width: 100%;
   background-color: #000000;
   border-radius: 5px;
   overflow: hidden;
-  margin-right: 1rem;
+  margin-bottom: 1rem;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-  display: inline-block;
-  
-
 }
 
 .card:hover {
   transform: translateY(-5px);
 }
+
+.card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@media screen and (min-width: 768px) {
+  .card-container {
+    justify-content: flex-start;
+  }
+
+  .card {
+    width: calc(33.33% - 1rem);
+  }
+}
+
 
 .card img {
   width: 100%;
@@ -152,11 +173,20 @@ button {
 }
 
 .artist-info-body img {
-  width: 200px;
-  height: 200px;
+  width: 100%; /* set image width to 100% */
+  max-width: 200px; /* set max width for the image */
+  height: auto; /* let the height adjust automatically */
   object-fit: cover;
   margin-bottom: 1rem;
 }
+
+@media screen and (min-width: 768px) {
+  .artist-info-body img {
+    width: 200px; /* set width back to 200px on larger screens */
+    max-width: none; /* unset the max-width property */
+  }
+}
+
 
 .artist-info-body p {
   font-size: 1.2rem;

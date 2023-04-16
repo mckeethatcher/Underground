@@ -12,7 +12,7 @@ function PostComponent() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('https://undergroundartists.herokuapp.com/api/all-posts');
+        const response = await axios.get('https://underground-backend.herokuapp.com/api/all-posts');
         if (response.data && Array.isArray(response.data.posts)) {
           setPosts(response.data.posts);
         }
@@ -27,7 +27,7 @@ function PostComponent() {
   const handleNewPostSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('https://undergroundartists.herokuapp.com/api/new-post', {
+      await axios.post('https://underground-backend.herokuapp.com/api/new-post', {
         title: newPostTitle,
         content: newPostContent
       });
@@ -50,7 +50,7 @@ function PostComponent() {
 
   const handlePostUpdate = async (postId) => {
     try {
-      const response = await axios.put(`https://undergroundartists.herokuapp.com/api/update-post/${postId}`, {
+      const response = await axios.put(`https://underground-backend.herokuapp.com/api/update-post/${postId}`, {
         title: updateTitle,
         content: updateContent
       });
@@ -72,7 +72,7 @@ function PostComponent() {
 
   const handlePostDelete = async (postId) => {
     try {
-      await axios.delete(`https://undergroundartists.herokuapp.com/api/delete-post/${postId}`);
+      await axios.delete(`https://underground-backend.herokuapp.com/api/delete-post/${postId}`);
 
       const updatedPosts = posts.filter(post => post._id !== postId);
       setPosts(updatedPosts);
