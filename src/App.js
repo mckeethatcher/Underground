@@ -139,8 +139,11 @@ function App() {
     </>
     )}
     <PostComponent posts={posts} setPosts={setPosts} />
+    
     </div>
+    
     );
+    
     }
     
     export default App;

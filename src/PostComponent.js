@@ -1,106 +1,77 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
 function PostComponent() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([
+  { id: 1, title: 'Taylor Swift', content: 'Taylor Alison Swift is an American singer-songwriter. She is known for her narrative songwriting, which often centers around her personal life.' },
+  { id: 2, title: 'Beyonce', content: 'Beyoncé Giselle Knowles-Carter is an American singer, songwriter, and actress. She is known for her powerful vocals and high-energy performances.' },
+  { id: 3, title: 'Ed Sheeran', content: 'Edward Christopher Sheeran is an English singer-songwriter. He is known for his soulful voice and heartfelt lyrics.' },
+  ]);
+  
   const [newPostTitle, setNewPostTitle] = useState('');
   const [newPostContent, setNewPostContent] = useState('');
   const [updateTitle, setUpdateTitle] = useState('');
   const [updateContent, setUpdateContent] = useState('');
   const [editingPostId, setEditingPostId] = useState(null);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get('https://underground-backend.herokuapp.com/api/all-posts');
-        if (response.data && Array.isArray(response.data.posts)) {
-          setPosts(response.data.posts);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchPosts();
-  }, []);
-
-  const handleNewPostSubmit = async (event) => {
+  const handleNewPostSubmit = (event) => {
     event.preventDefault();
-    try {
-      await axios.post('https://underground-backend.herokuapp.com/api/new-post', {
-        title: newPostTitle,
-        content: newPostContent
-      });
-      const newPost = {
-        title: newPostTitle,
-        content: newPostContent
-      };
-      setPosts([...posts, newPost]);
-      setNewPostTitle('');
-      setNewPostContent('');
-    } catch (error) {
-      console.error(error);
-    }
+    const newPost = {
+      id: posts.length + 1,
+      title: newPostTitle,
+      content: newPostContent,
+    };
+    setPosts([...posts, newPost]);
+    setNewPostTitle('');
+    setNewPostContent('');
   };
 
   const handleEditPost = (postId) => {
     setEditingPostId(postId);
-    console.log(editingPostId);
+    setUpdateTitle(posts.find(post => post.id === postId).title);
+    setUpdateContent(posts.find(post => post.id === postId).content);
   };
 
-  const handlePostUpdate = async (postId) => {
-    try {
-      const response = await axios.put(`https://underground-backend.herokuapp.com/api/update-post/${postId}`, {
-        title: updateTitle,
-        content: updateContent
-      });
-
-      const data = response.data;
-      const updatedPosts = posts.map(post => {
-        if (post._id === data._id) {
-          return data;
-        }
-        return post;
-      });
-
-      setPosts(updatedPosts);
-      setEditingPostId(null);
-    } catch (error) {
-      console.error(error);
-    }
+  const handlePostUpdate = (postId) => {
+    const updatedPosts = posts.map((post) => {
+      if (post.id === postId) {
+        return { ...post, title: updateTitle, content: updateContent };
+      }
+      return post;
+    });
+    setPosts(updatedPosts);
+    setEditingPostId(null);
   };
 
-  const handlePostDelete = async (postId) => {
-    try {
-      await axios.delete(`https://underground-backend.herokuapp.com/api/delete-post/${postId}`);
-
-      const updatedPosts = posts.filter(post => post._id !== postId);
-      setPosts(updatedPosts);
-    } catch (error) {
-      console.error(error);
-    }
+  const handlePostDelete = (postId) => {
+    const updatedPosts = posts.filter((post) => post.id !== postId);
+    setPosts(updatedPosts);
   };
 
   return (
     <div>
       <h1>Posts</h1>
-      <form onSubmit={editingPostId ? handlePostUpdate : handleNewPostSubmit}>
-        <input type="text" placeholder="Title" value={newPostTitle} onChange={event => setNewPostTitle(event.target.value)} />
-        <textarea placeholder="Content" value={newPostContent} onChange={event => setNewPostContent(event.target.value)} />
+      <form onSubmit={editingPostId ? () => handlePostUpdate(editingPostId) : handleNewPostSubmit}>
+        <input type="text" placeholder="Title" value={editingPostId ? updateTitle : newPostTitle} onChange={(event) => editingPostId ? setUpdateTitle(event.target.value) : setNewPostTitle(event.target.value)} />
+        <textarea placeholder="Content" value={editingPostId ? updateContent : newPostContent} onChange={(event) => editingPostId ? setUpdateContent(event.target.value) : setNewPostContent(event.target.value)} />
         <button type="submit">{editingPostId ? 'Update' : 'Create'}</button>
         {editingPostId && <button type="button" onClick={() => setEditingPostId(null)}>Cancel</button>}
       </form>
       <ul>
-        {posts?.map((post, index) => (
-          <li key={index}>
+        {posts.map((post) => (
+          <li key={post.id}>
             <h2>{post.title}</h2>
             <p>{post.content}</p>
-            <button type="button" onClick={() => handlePostDelete(post._id)}>Delete</button>
-            <form> 
-              <input type="text" placeholder="Title" value={updateTitle} onChange={event => setUpdateTitle(event.target.value)} />
-              <textarea placeholder="Content" value={updateContent} onChange={event => setUpdateContent(event.target.value)} />
-              <button type="submit" onClick={() => handlePostUpdate(post._id)}>Update</button>
-            </form>
+            <button type="button" onClick={() => handlePostDelete(post.id)}>Delete</button>
+            {editingPostId === post.id ? (
+              <form>
+                <input type="text" placeholder="Title" value={updateTitle} onChange={(event) => setUpdateTitle(event.target.value)} />
+                <textarea placeholder="Content" value={updateContent} onChange={(event) => setUpdateContent(event.target.value)} />
+                <button type="button" onClick={() => handlePostUpdate(post.id)}>Update</button>
+                <button type="button" onClick={() => setEditingPostId(null)}>Cancel</button>
+              </form>
+            ) : (
+              <button type="button" onClick={() => handleEditPost(post.id)}>Update</button>
+            )}
           </li>
         ))}
       </ul>
