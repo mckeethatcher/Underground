@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+Underground App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Underground, an app designed to help you discover underground artists and create your own personalized "must listen to" list.
 
-## Available Scripts
+Getting Started
 
-In the project directory, you can run:
+To get started with Underground, you will need to have a Spotify account and authenticate the app with your account credentials. Once you have logged in, you will be presented with a simple interface that allows you to search for underground artists.
 
-### `npm start`
+Searching for Artists
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+To search for an artist, simply type the name of the artist into the search bar and press enter. The app will use the Spotify API to find artists that match your search query. You can browse through the search results and listen to their top tracks to get a sense of their music.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Adding Artists to Your Must Listen To List
 
-### `npm test`
+If you find an artist that you love, you can add them to your must listen to list by clicking the "Add to Must Listen To" button. This will add the artist to your list, which you can access by clicking on the "My Must Listen To List" button in the app.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Removing Artists from Your Must Listen To List
 
-### `npm run build`
+If you decide that you no longer want to listen to an artist on your must listen to list, you can remove them by clicking the "Remove" button next to their name. This will remove the artist from your list and they will no longer appear in your must listen to list.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Disclaimer
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Underground is not affiliated with Spotify and does not own or claim any rights to the music provided by the app. The app simply uses the Spotify API to search for and play music.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Contact
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you have any questions or feedback about Underground, please feel free to contact us at undergroundapp@gmail.com.
