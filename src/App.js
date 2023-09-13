@@ -5,17 +5,11 @@ import CommentSection from './CommentSection';
 import RelatedArtists from './RelatedArtists';
 import PostComponent from './PostComponent';
 
-
-
-
 const SPOTIFY_CLIENT_ID = 'ced1e023722b4ed18fa02bd600da4547';
 const SPOTIFY_CLIENT_SECRET = '6e0a60ff6e9343489b9aa3f792f8b61c';
 const SPOTIFY_AUTH_URL = 'https://accounts.spotify.com/api/token';
 const SPOTIFY_API_URL = 'https://api.spotify.com/v1/';
-// const postSchema = require('./models/postSchema');
-// const Post = mongoose.model('Post', postSchema);
 const genreOptions = ['pop', 'rock', 'hip hop', 'jazz', 'country', 'blues', 'reggae', 'classical', 'electronic', 'metal', 'folk', 'indie', 'r&b', 'soul', 'punk'];
-
 
 function App() {
   const [artists, setArtists] = useState([]);
@@ -24,7 +18,7 @@ function App() {
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [mustListenArtists, setMustListenArtists] = useState([]);
   const [posts, setPosts] = useState([]);
-
+  const [filteredArtists, setFilteredArtists] = useState([]);
 
   useEffect(() => {
     // authenticate with Spotify API
@@ -61,10 +55,18 @@ function App() {
   }, [searchTerm]);
 
   useEffect(() => {
-    // filter artists by number of streams
-    const filteredArtists = artists.filter(artist => artist.streams <= maxStreams);
-    setArtists(filteredArtists);
-  }, [maxStreams]);
+    // Filter artists by number of streams
+    const filteredArtists = artists.filter(artist => parseInt(artist.streams.replace(/,/g, '')) <= maxStreams);
+    setFilteredArtists(filteredArtists);
+  }, [artists, maxStreams]);
+  
+
+  useEffect(() => {
+    // Filter artists by number of streams
+    const filteredArtists = artists.filter(artist => parseInt(artist.streams.replace(/,/g, '')) <= maxStreams);
+    setFilteredArtists(filteredArtists);
+  }, [artists, maxStreams]);
+  
 
   const handleSearch = event => {
     setSearchTerm(event.target.value);
@@ -108,17 +110,18 @@ function App() {
     {genreOptions.map(option => (
     <button key={option} onClick={() => setSearchTerm(option)}>{option}</button>
     ))}
-    </div>
-    <div className="card-container">
-    {artists.map(artist => (
+   <div className="card-container">
+  {filteredArtists.map(artist => (
     <div key={artist.id} className="card" onClick={() => handleArtistClick(artist.id)}>
-    {artist.image && <img src={artist.image} alt={artist.name} />}
-    <h2>{artist.name}</h2>
-    <p>{artist.streams} streams</p>
-    <RelatedArtists />
-    <button onClick={() => handleAddToMustListen(artist.id)}>Add to Must Listen</button>
+      {artist.image && <img src={artist.image} alt={artist.name} />}
+      <h2>{artist.name}</h2>
+      <p>{artist.streams} streams</p>
+      <RelatedArtists />
+      <button onClick={() => handleAddToMustListen(artist.id)}>Add to Must Listen</button>
     </div>
-    ))}
+  ))}
+</div>
+
     </div>
     <h2>Must Listen</h2>
     <div className="card-container">
